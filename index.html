@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sui-Generis LLC — Client Intake</title>
+<meta name="description" content="Tell us about your security questionnaire or AI governance review — Sui-Generis LLC's Deal Unlocker and AI Data Exposure Register.">
+<style>
+  :root {
+    --navy: #0f2a4a; --navy-light: #1d4273; --accent: #1a73a3; --accent-light: #e8f1f6;
+    --ink: #1c242e; --muted: #5b6672; --border: #d7dde3; --bg-soft: #f6f8fa;
+    --ok: #1b7a43; --ok-bg: #e5f5ea; --err: #b23b2e; --err-bg: #fbeae7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    color: var(--ink); margin: 0; background: var(--bg-soft); line-height: 1.5;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  header { text-align: center; margin-bottom: 36px; }
+  header .brand { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 10px; }
+  header h1 { font-size: 26px; margin: 0 0 10px; color: var(--navy); letter-spacing: -0.2px; }
+  header p { color: var(--muted); font-size: 14.5px; max-width: 520px; margin: 0 auto; }
+
+  .card {
+    background: #fff; border: 1px solid var(--border); border-radius: 10px;
+    padding: 32px 32px 28px; box-shadow: 0 1px 3px rgba(15,42,74,0.06);
+  }
+
+  .service-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+  .service-opt {
+    border: 1.5px solid var(--border); border-radius: 8px; padding: 16px 14px;
+    cursor: pointer; text-align: left; background: #fff; transition: border-color .12s, background .12s;
+  }
+  .service-opt:hover { border-color: var(--accent); }
+  .service-opt.active { border-color: var(--navy); background: var(--accent-light); }
+  .service-opt .name { font-weight: 700; font-size: 14px; color: var(--navy); margin-bottom: 4px; }
+  .service-opt .desc { font-size: 12px; color: var(--muted); }
+
+  fieldset { border: none; padding: 0; margin: 0 0 22px; }
+  legend {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+    font-weight: 600; margin-bottom: 12px; padding: 0;
+  }
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 5px;
+  }
+  .field .hint { font-weight: 400; color: var(--muted); font-size: 11.5px; margin-left: 4px; }
+  .field input[type="text"], .field input[type="email"], .field input[type="tel"],
+  .field select, .field textarea {
+    width: 100%; padding: 9px 11px; border: 1px solid var(--border); border-radius: 6px;
+    font-size: 13.5px; font-family: inherit; color: var(--ink); background: #fff;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,115,163,0.12);
+  }
+  .field textarea { resize: vertical; min-height: 72px; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .radio-group { display: flex; flex-wrap: wrap; gap: 10px; }
+  .radio-pill {
+    border: 1px solid var(--border); border-radius: 20px; padding: 7px 14px;
+    font-size: 12.5px; cursor: pointer; background: #fff; user-select: none;
+  }
+  .radio-pill input { display: none; }
+  .radio-pill.checked { border-color: var(--navy); background: var(--accent-light); color: var(--navy); font-weight: 600; }
+
+  .honeypot { position: absolute; left: -9999px; top: -9999px; }
+
+  .submit-row { margin-top: 24px; }
+  button.submit-btn {
+    width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 7px;
+    padding: 13px 18px; font-size: 14.5px; font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+  button.submit-btn:hover { background: var(--navy-light); }
+  button.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .submit-note { font-size: 11.5px; color: var(--muted); text-align: center; margin-top: 10px; }
+
+  .status-banner {
+    display: none; border-radius: 7px; padding: 12px 16px; font-size: 13px; margin-bottom: 20px;
+  }
+  .status-banner.show { display: block; }
+  .status-banner.ok { background: var(--ok-bg); color: var(--ok); border: 1px solid #c2e3cd; }
+  .status-banner.err { background: var(--err-bg); color: var(--err); border: 1px solid #f0cdc6; }
+
+  .hidden-section { display: none; }
+  .hidden-section.visible { display: block; }
+
+  footer { text-align: center; margin-top: 28px; font-size: 11.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">Sui-Generis LLC</div>
+    <h1>Tell us what you're working on</h1>
+    <p>Stalled on an enterprise security questionnaire, or need to get ahead of an AI governance review? A few details below and we'll follow up within one business day.</p>
+  </header>
+
+  <div class="card">
+    <div id="status-ok" class="status-banner ok">Thanks — your intake was received. We'll follow up within one business day.</div>
+    <div id="status-err" class="status-banner err">Something went wrong submitting the form. Please try again, or email us directly.</div>
+
+    <form name="client-intake" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="intake-form">
+      <input type="hidden" name="form-name" value="client-intake">
+      <p class="honeypot">
+        <label>Don't fill this out if you're human: <input name="bot-field"></label>
+      </p>
+
+      <fieldset>
+        <legend>Which service are you interested in?</legend>
+        <div class="service-toggle">
+          <label class="service-opt" data-value="deal-unlocker">
+            <input type="radio" name="service" value="Deal Unlocker" class="service-radio" style="display:none" required>
+            <div class="name">Deal Unlocker</div>
+            <div class="desc">72-hour security questionnaire turnaround — SIG Lite, CAIQ, or custom.</div>
+          </label>
+          <label class="service-opt" data-value="ai-exposure">
+            <input type="radio" name="service" value="AI Data Exposure Register" class="service-radio" style="display:none" required>
+            <div class="name">AI Data Exposure Register</div>
+            <div class="desc">AI tool inventory, BAA/DPA gap register, and remediation plan.</div>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Contact</legend>
+        <div class="row-2">
+          <div class="field">
+            <label for="contact_name">Your name</label>
+            <input type="text" id="contact_name" name="contact_name" required>
+          </div>
+          <div class="field">
+            <label for="company_name">Company / firm name</label>
+            <input type="text" id="company_name" name="company_name" required>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="hint">(optional)</span></label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Deal Unlocker fields -->
+      <div class="hidden-section" id="section-deal-unlocker">
+        <fieldset>
+          <legend>About the questionnaire</legend>
+          <div class="row-2">
+            <div class="field">
+              <label for="questionnaire_type">Questionnaire type</label>
+              <select id="questionnaire_type" name="questionnaire_type">
+                <option value="SIG Lite">SIG Lite</option>
+                <option value="CAIQ">CAIQ</option>
+                <option value="Custom / other">Custom / other</option>
+                <option value="Not sure yet">Not sure yet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="question_count">Approx. question count <span class="hint">(optional)</span></label>
+              <input type="text" id="question_count" name="question_count" placeholder="e.g. 80">
+            </div>
+          </div>
+          <div class="field">
+            <label>Does your product handle PHI / is the buyer a hospital or health system? <span class="hint">(optional)</span></label>
+            <div class="radio-group">
+              <label class="radio-pill"><input type="radio" name="handles_phi" value="Yes">Yes</label>
+              <label class="radio-pill"><input type="radio" name="handles_phi" value="No">No</label>
+              <label class="radio-pill"><input type="radio" name="handles_phi" value="Not sure">Not sure</label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="deal_deadline">When does the buyer need this back? <span class="hint">(optional)</span></label>
+            <input type="text" id="deal_deadline" name="deal_deadline" placeholder="e.g. Nov 15, or “ASAP — deal is stalled”">
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- AI Data Exposure Register fields -->
+      <div class="hidden-section" id="section-ai-exposure">
+        <fieldset>
+          <legend>About your organization</legend>
+          <div class="row-2">
+            <div class="field">
+              <label for="firm_type">Organization type</label>
+              <select id="firm_type" name="firm_type">
+                <option value="Law firm">Law firm</option>
+                <option value="Medical practice">Medical practice</option>
+                <option value="CPA / accounting firm">CPA / accounting firm</option>
+                <option value="Other professional firm">Other professional firm</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="employee_count">Approx. employee count <span class="hint">(optional)</span></label>
+              <input type="text" id="employee_count" name="employee_count" placeholder="e.g. 12">
+            </div>
+          </div>
+          <div class="field">
+            <label>Which do you use? <span class="hint">(optional — select all that apply isn't supported by radio, so pick the primary one)</span></label>
+            <div class="radio-group">
+              <label class="radio-pill"><input type="radio" name="workspace_platform" value="Google Workspace">Google Workspace</label>
+              <label class="radio-pill"><input type="radio" name="workspace_platform" value="Microsoft 365">Microsoft 365</label>
+              <label class="radio-pill"><input type="radio" name="workspace_platform" value="Both">Both</label>
+              <label class="radio-pill"><input type="radio" name="workspace_platform" value="Not sure">Not sure</label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="trigger">What's prompting this now? <span class="hint">(optional)</span></label>
+            <select id="trigger" name="trigger">
+              <option value="">— Select —</option>
+              <option value="ABA Formal Opinion 512 / bar compliance">ABA Formal Opinion 512 / bar compliance</option>
+              <option value="A recent AI-related data exposure or breach (ours or another firm's)">A recent AI-related data exposure or breach (ours or another firm's)</option>
+              <option value="General AI governance / getting ahead of it">General AI governance / getting ahead of it</option>
+              <option value="Referred by an attorney or consultant">Referred by an attorney or consultant</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="referring_firm">If referred by a law firm, their firm name <span class="hint">(optional — this is for crediting the referral, not a request for your own client list)</span></label>
+            <input type="text" id="referring_firm" name="referring_firm">
+          </div>
+        </fieldset>
+      </div>
+
+      <fieldset>
+        <legend>Anything else</legend>
+        <div class="field">
+          <label for="notes">Notes <span class="hint">(optional)</span></label>
+          <textarea id="notes" name="notes" placeholder="Context that would help us scope this quickly."></textarea>
+        </div>
+        <div class="field">
+          <label for="heard_from">How did you hear about us? <span class="hint">(optional)</span></label>
+          <input type="text" id="heard_from" name="heard_from">
+        </div>
+      </fieldset>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn" id="submit-btn">Send intake</button>
+        <div class="submit-note">We'll follow up by email within one business day. No answer is submitted anywhere, and no questionnaire data moves, until you've reviewed and approved it.</div>
+      </div>
+    </form>
+  </div>
+
+  <footer>Sui-Generis LLC &mdash; Knoxville, TN</footer>
+</div>
+
+<script>
+(function () {
+  var serviceOpts = document.querySelectorAll(".service-opt");
+  var sections = {
+    "deal-unlocker": document.getElementById("section-deal-unlocker"),
+    "ai-exposure": document.getElementById("section-ai-exposure"),
+  };
+
+  function selectService(value) {
+    serviceOpts.forEach(function (opt) {
+      var isActive = opt.getAttribute("data-value") === value;
+      opt.classList.toggle("active", isActive);
+      var radio = opt.querySelector(".service-radio");
+      radio.checked = isActive;
+    });
+    Object.keys(sections).forEach(function (key) {
+      sections[key].classList.toggle("visible", key === value);
+    });
+  }
+
+  serviceOpts.forEach(function (opt) {
+    opt.addEventListener("click", function () {
+      selectService(opt.getAttribute("data-value"));
+    });
+  });
+
+  // Radio pill styling (the free-text "which trigger / platform" pills)
+  document.querySelectorAll(".radio-pill").forEach(function (pill) {
+    var input = pill.querySelector("input");
+    pill.addEventListener("click", function () {
+      var name = input.name;
+      document.querySelectorAll('.radio-pill input[name="' + name + '"]').forEach(function (i) {
+        i.closest(".radio-pill").classList.remove("checked");
+      });
+      input.checked = true;
+      pill.classList.add("checked");
+    });
+  });
+
+  // AJAX submit to Netlify Forms so we can show an inline success/error
+  // state without leaving the page or needing a separate thank-you route.
+  var form = document.getElementById("intake-form");
+  var submitBtn = document.getElementById("submit-btn");
+  var okBanner = document.getElementById("status-ok");
+  var errBanner = document.getElementById("status-err");
+
+  function encode(data) {
+    return Object.keys(data)
+      .map(function (k) { return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]); })
+      .join("&");
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    okBanner.classList.remove("show");
+    errBanner.classList.remove("show");
+
+    var serviceChosen = form.querySelector('input[name="service"]:checked');
+    if (!serviceChosen) {
+      errBanner.textContent = "Please select which service you're interested in.";
+      errBanner.classList.add("show");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+
+    var formData = new FormData(form);
+    var payload = {};
+    formData.forEach(function (value, key) { payload[key] = value; });
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode(payload),
+    })
+      .then(function () {
+        okBanner.classList.add("show");
+        form.reset();
+        selectService(null);
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send intake";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      })
+      .catch(function () {
+        errBanner.classList.add("show");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send intake";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+  });
+})();
+</script>
+</body>
+</html>
