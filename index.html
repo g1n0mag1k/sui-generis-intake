@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sui-Generis LLC — Client Intake</title>
-<meta name="description" content="Tell us about your security questionnaire or AI governance review — Sui-Generis LLC's Deal Unlocker and AI Data Exposure Register.">
+<title>Sui-Generis — Client Intake</title>
+<meta name="description" content="Tell us about your security questionnaire or AI governance review — Sui-Generis's Deal Unlocker and AI Data Exposure Register.">
 <style>
   :root {
     --navy: #0f2a4a; --navy-light: #1d4273; --accent: #1a73a3; --accent-light: #e8f1f6;
@@ -94,7 +94,7 @@
 <div class="wrap">
 
   <header>
-    <div class="brand">Sui-Generis LLC</div>
+    <div class="brand">Sui-Generis</div>
     <h1>Tell us what you're working on</h1>
     <p>Stalled on an enterprise security questionnaire, or need to get ahead of an AI governance review? A few details below and we'll follow up within one business day.</p>
   </header>
@@ -181,6 +181,16 @@
             <input type="text" id="deal_deadline" name="deal_deadline" placeholder="e.g. Nov 15, or “ASAP — deal is stalled”">
           </div>
         </fieldset>
+        <fieldset>
+          <legend>Beyond this one questionnaire <span class="hint" style="text-transform:none;letter-spacing:normal;">(optional — check anything else of interest)</span></legend>
+          <div class="radio-group">
+            <label class="radio-pill checkbox-pill"><input type="checkbox" name="deal_unlocker_addons" value="Rush (24-hour turnaround)">Rush (24-hour)</label>
+            <label class="radio-pill checkbox-pill"><input type="checkbox" name="deal_unlocker_addons" value="Vault Retainer (unlimited questionnaires, ongoing)">Ongoing retainer</label>
+            <label class="radio-pill checkbox-pill"><input type="checkbox" name="deal_unlocker_addons" value="BAA / contract redline support">Contract / BAA redline</label>
+            <label class="radio-pill checkbox-pill"><input type="checkbox" name="deal_unlocker_addons" value="HITRUST e1 readiness roadmap">HITRUST readiness</label>
+            <label class="radio-pill checkbox-pill"><input type="checkbox" name="deal_unlocker_addons" value="Fundraising / M&amp;A diligence prep">Fundraising / M&amp;A diligence prep</label>
+          </div>
+        </fieldset>
       </div>
 
       <!-- AI Data Exposure Register fields -->
@@ -227,6 +237,13 @@
             <input type="text" id="referring_firm" name="referring_firm">
           </div>
         </fieldset>
+        <fieldset>
+          <legend>Beyond the initial register <span class="hint" style="text-transform:none;letter-spacing:normal;">(optional — check anything else of interest)</span></legend>
+          <div class="radio-group">
+            <label class="radio-pill checkbox-pill"><input type="checkbox" name="ai_exposure_addons" value="Annual re-inventory (ongoing)">Annual re-inventory</label>
+            <label class="radio-pill checkbox-pill"><input type="checkbox" name="ai_exposure_addons" value="OAuth cleanup / remediation help">OAuth cleanup</label>
+          </div>
+        </fieldset>
       </div>
 
       <fieldset>
@@ -248,7 +265,7 @@
     </form>
   </div>
 
-  <footer>Sui-Generis LLC &mdash; Knoxville, TN</footer>
+  <footer>Sui-Generis &mdash; Knoxville, TN</footer>
 </div>
 
 <script>
@@ -277,8 +294,9 @@
     });
   });
 
-  // Radio pill styling (the free-text "which trigger / platform" pills)
-  document.querySelectorAll(".radio-pill").forEach(function (pill) {
+  // Radio pill styling (the free-text "which trigger / platform" pills) —
+  // selecting one clears the others sharing its name.
+  document.querySelectorAll(".radio-pill:not(.checkbox-pill)").forEach(function (pill) {
     var input = pill.querySelector("input");
     pill.addEventListener("click", function () {
       var name = input.name;
@@ -287,6 +305,15 @@
       });
       input.checked = true;
       pill.classList.add("checked");
+    });
+  });
+
+  // Checkbox pills (add-on interest) — independent toggles, multiple allowed.
+  document.querySelectorAll(".checkbox-pill").forEach(function (pill) {
+    var input = pill.querySelector("input");
+    pill.addEventListener("click", function () {
+      input.checked = !input.checked;
+      pill.classList.toggle("checked", input.checked);
     });
   });
 
